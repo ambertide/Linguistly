@@ -1,7 +1,7 @@
 from commonExpressions import CommonExpressions, prepare
 
 
-file_ = input("Welcome to the Linguistly 0.1, please write the directory of"
+file_ = input("Welcome to the Linguistly, please write the directory of"
     " the document you wish to analyize: ")
 file = open(file_, "r")
 initdata = file.read()
@@ -16,7 +16,7 @@ for i in range(len(indata)):
 keysindex = list(indexed)
 output = ""
 for i in range(len(keysindex)):
-    output = output + "\n {}  - {}".format(keysindex[i], str(indexed[keysindex[i]]))
+    output = output + "\n {}  :: {}".format(keysindex[i], str(indexed[keysindex[i]]))
 
 file_output = open("output.txt", "w")
 file_output.write(output)
