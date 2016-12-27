@@ -1,4 +1,4 @@
-from commonExpressions import CommonExpressions, prepare
+from commonExpressions import CommonExpressions, prepare, save
 
 
 file_ = input("Welcome to the Linguistly, please write the directory of"
@@ -15,9 +15,5 @@ for i in range(len(indata)):
 
 keysindex = list(indexed)
 output = ""
-for i in range(len(keysindex)):
-    output = output + "\n {}  :: {}".format(keysindex[i], str(indexed[keysindex[i]]))
-
-file_output = open("output.txt", "w")
-file_output.write(output)
-file_output.close()
+save(indexed, keysindex, outputtype="txt")
+save(indexed, keysindex, outputtype="sqlite3")
