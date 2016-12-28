@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 
 class CommonExpressions:
@@ -28,11 +29,16 @@ def save(indexed, keysindex, outputtype = "txt"):
         fileoutput.write(output)
         fileoutput.close()
     elif outputtype == "sqlite3":
+        timeL = time.ctime().split()
+        timeS = ""
+        for i in range(len(timeL)):
+            timeS = timeS + timeL[i]
+        timeS = timeS.replace(":", "")
         db = sqlite3.connect("output.db")
         dbc = db.cursor()
-        dbc.execute("CREATE TABLE freqAnalyisis(word TEXT, count INT)")
+        dbc.execute("CREATE TABLE {}(word TEXT, count INT)".format(str(timeS)))
         for i in range(len(keysindex)):
-            dbc.execute("INSERT INTO freqAnalyisis values(\"{}\", {})".format(
-                keysindex[i], indexed[keysindex[i]]))
+            dbc.execute("INSERT INTO {} values(\"{}\", {})".format(
+                str(timeS), keysindex[i], indexed[keysindex[i]]))
         db.commit()
         db.close()
