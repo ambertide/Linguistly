@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
 from commonExpressions import CommonExpressions, prepare, save
+from docx import Document
+
 
 class Latte:
     def __init__(self, master):
@@ -28,16 +30,26 @@ class Latte:
     def browse(self):
         options = {}
         options['defaultextension'] = '.txt'
-        options['filetypes'] = [("Text Files", ".txt")]
+        options['filetypes'] = [("Text Files", ".txt"),
+                                ("Word Files", ".docx")]
         options['title'] = 'Select File'
         self.file_directory = filedialog.askopenfilename(**options)
         self.file_directory_label['text'] = self.file_directory
         self.output_finalize_button['state'] = 'normal'
 
     def commence(self):
-        file = open(self.file_directory, "r")
-        initdata = file.read()
-        file.close()
+        extension = self.file_directory.split(".")
+        initdata = ""
+        if extension[1] == "txt":
+            file = open(self.file_directory, "r")
+            initdata = file.read()
+            file.close()
+        elif extension[1] == "docx":
+            initdata = ""
+            file = Document(self.file_directory)
+            parags = file.paragraphs
+            for i in range(len(parags)):
+                initdata += parags[i].text
         findata = prepare(initdata)
         indexed = {}
         indata = list(set(findata))
