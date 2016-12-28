@@ -16,7 +16,7 @@ class Latte:
         self.selectorVar = tk.StringVar(master)
         self.selectorVar.set("txt")
         self.output_method_select = tk.OptionMenu(master, self.selectorVar,
-            "txt", "sqlite3")
+            "txt", "sqlite3", "xlsx")
         self.output_finalize_button = tk.Button(master, text="Analyize",
             state = tk.DISABLED, command= lambda: self.commence())
         self.file_directory_label.grid(row=0, column=0, columnspan=2,

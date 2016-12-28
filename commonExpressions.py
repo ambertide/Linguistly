@@ -1,5 +1,6 @@
 import sqlite3
 import time
+from openpyxl import Workbook
 
 
 class CommonExpressions:
@@ -42,3 +43,12 @@ def save(indexed, keysindex, outputtype = "txt"):
                 str(timeS), keysindex[i], indexed[keysindex[i]]))
         db.commit()
         db.close()
+    elif outputtype == "xlsx":
+        wb = Workbook()
+        ws = wb.active
+        turn = 0
+        endturn = len(keysindex)
+        while turn < endturn:
+            ws.append([keysindex[turn], indexed[keysindex[turn]]])
+            turn += 1
+        wb.save("output.xlsx")
