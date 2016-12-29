@@ -15,16 +15,20 @@ class Latte:
             text = "Browse", command = lambda: self.browse())
         self.selectorVar = tk.StringVar(master)
         self.selectorVar.set("txt")
+        self.checkBoxVar = tk.IntVar(master)
         self.output_method_select = tk.OptionMenu(master, self.selectorVar,
             "txt", "sqlite3", "xlsx")
+        self.is_turkish = tk.Checkbutton(master, text= "Turkish",
+            variable = self.checkBoxVar)
         self.output_finalize_button = tk.Button(master, text="Analyize",
             state = tk.DISABLED, command= lambda: self.commence())
         self.file_directory_label.grid(row=0, column=0, columnspan=2,
             sticky=tk.W + tk.E + tk.S + tk.N)
         self.file_directory_button.grid(row=0, column=2,
             sticky=tk.W + tk.E + tk.S + tk.N)
-        self.output_method_select.grid(row=1, column=0, columnspan=2,
+        self.output_method_select.grid(row=1, column=0,
             sticky=tk.W + tk.E + tk.S + tk.N)
+        self.is_turkish.grid(row=1, column=1)
         self.output_finalize_button.grid(row=1, column=2,
             sticky=tk.W + tk.E + tk.S + tk.N)
     def browse(self):
@@ -40,6 +44,7 @@ class Latte:
     def commence(self):
         extension = self.file_directory.split(".")
         initdata = ""
+        findata = []
         if extension[1] == "txt":
             file = open(self.file_directory, "r")
             initdata = file.read()
@@ -50,7 +55,10 @@ class Latte:
             parags = file.paragraphs
             for i in range(len(parags)):
                 initdata += parags[i].text
-        findata = prepare(initdata)
+        if self.checkBoxVar.get() == 1:
+            findata = prepare(initdata)
+        elif self.checkBoxVar.get() == 0:
+            findata = prepare(initdata)
         indexed = {}
         indata = list(set(findata))
         for i in range(len(indata)):
