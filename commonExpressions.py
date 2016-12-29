@@ -1,10 +1,21 @@
 import sqlite3
 import time
 from openpyxl import Workbook
+from docx import Document
 
 
 class CommonExpressions:
-    punctuations = [".", "?", ";", ":", "!", "(", ")", ",", "\\", "\""]
+    punctuations = [".", "?", ";", ":", "!", "(", ")", ",", "\\", "\"", "-",
+                    "--", "  ", "”", "“"]
+    suffices_tr = ["'nin", "'nın", "'a", "'e", "'i", "'", "'de", "'da",
+                    "'in", "'ın", "'ım", "'im", "'den", "'dan", "'ten",
+                    "'tan", "”", "'te", "'ta",
+                    "’nin", "’nın", "’a", "’e", "’i", "’de", "’da",
+                    "’in", "’ın", "’ım", "’im", "’den", "’dan", "’ten",
+                    "’tan", "’te", "’ta"]
+
+
+    suffices_en = ["'s"]
     trtolatin = ["I"]
     trtolatindict = {"I": "i"}
 
@@ -52,3 +63,25 @@ def save(indexed, keysindex, outputtype = "txt"):
             ws.append([keysindex[turn], indexed[keysindex[turn]]])
             turn += 1
         wb.save("output.xlsx")
+
+
+def strip_suffices(input_, lang="tr"):
+    if lang == "Turkish":
+        for i in range(len(CommonExpressions.suffices_tr)):
+            input_ = input_.replace(CommonExpressions.suffices_tr[i], "")
+    elif lang == "English":
+        for i in range(len(commonExpressions.suffices_en)):
+            input_ = input_.replace(CommonExpressions.suffices_en[i], "")
+    return input_
+
+def save_unsufficed(inputed, method="txt"):
+    if method == "txt":
+        file_ = open("outputSuffix.txt", "w")
+        file_.write(inputed)
+        file_.close()
+    elif method == "docx":
+        output_file = Document()
+        inputedlines = inputed.split("\n")
+        for i in range(len(inputedlines)):
+            output_file.add_paragraph(inputedlines[i])
+        output_file.save("output.docx")
