@@ -15,7 +15,7 @@ class CommonExpressions:
                     "’tan", "’te", "’ta"]
 
 
-    suffices_en = ["'s"]
+    suffices_en = ["'s", "'re", "n't"]
     trtolatin = ["I"]
     trtolatindict = {"I": "i"}
 
@@ -26,7 +26,7 @@ def prepare(stringObject, tr = "no"):
         for i in range(len(CommonExpressions.trtolatin)):
             hold = hold.replace(CommonExpressions.trtolatin[i], CommonExpressions.trtolatindict[CommonExpressions.trtolatin[i]])
     for i in range(len(CommonExpressions.punctuations)):
-        hold = hold.replace(CommonExpressions.punctuations[i], "")
+        hold = hold.replace(CommonExpressions.punctuations[i], " ")
     hold = hold.lower()
     output = hold.split(" ")
     return output
