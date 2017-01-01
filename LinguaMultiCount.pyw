@@ -15,9 +15,9 @@ class Latte:
         self.word_count_entry.grid(row=1, column=0, columnspan=2,
                                     sticky= tk.W + tk.S + tk.N + tk.E)
         self.selectorVar = tk.StringVar()
-        self.selectorVar.set("sqlite3")
+        self.selectorVar.set("csv")
         self.output_type_selector = tk.OptionMenu(master, self.selectorVar,
-                                        "sqlite3", "txt", "xlsx")
+                                        "sqlite3", "txt", "xlsx","csv")
         #Allright, something WILL go wrong!
         self.output_type_selector.grid(row=0, column=3,
                                         sticky= tk.W + tk.S + tk.N + tk.E)
@@ -42,7 +42,7 @@ class Latte:
                 data = file_.read()
                 file_.close()
             elif extension[1] == "docx":
-                file = Document(self.file_directory)
+                file = Document(files[i])
                 parags = file.paragraphs
                 for i in range(len(parags)):
                     data += (parags[i].text + "\n")

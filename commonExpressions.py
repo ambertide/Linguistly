@@ -37,7 +37,7 @@ def save(indexed, keysindex, outputtype = "txt"):
         output = ""
         for i in range(len(keysindex)):
             output = output + "\n {}  :: {}".format(keysindex[i], str(indexed[keysindex[i]]))
-        fileoutput = open("output.txt", "w")
+        fileoutput = open("output{}.txt".format(time.ctime().replace(":", "-")), "w")
         fileoutput.write(output)
         fileoutput.close()
     elif outputtype == "sqlite3":
@@ -62,7 +62,14 @@ def save(indexed, keysindex, outputtype = "txt"):
         while turn < endturn:
             ws.append([keysindex[turn], indexed[keysindex[turn]]])
             turn += 1
-        wb.save("output.xlsx")
+        wb.save("output{}.xlsx".format(time.ctime().replace(":", "-")))
+    elif outputtype == "csv":
+        output = "word,count"
+        for i in range(len(keysindex)):
+            output = output + "\n{},{}".format(keysindex[i], str(indexed[keysindex[i]]))
+        fileoutput = open("output{}.csv".format(time.ctime().replace(":", "-")), "w")
+        fileoutput.write(output)
+        fileoutput.close()
 
 
 def strip_suffices(input_, lang="tr"):

@@ -14,10 +14,10 @@ class Latte:
         self.file_directory_button = tk.Button(master,
             text = "Browse", command = lambda: self.browse())
         self.selectorVar = tk.StringVar(master)
-        self.selectorVar.set("txt")
+        self.selectorVar.set("csv")
         self.checkBoxVar = tk.IntVar(master)
         self.output_method_select = tk.OptionMenu(master, self.selectorVar,
-            "txt", "sqlite3", "xlsx")
+            "txt", "sqlite3", "xlsx", "csv")
         self.is_turkish = tk.Checkbutton(master, text= "Turkish",
             variable = self.checkBoxVar)
         self.output_finalize_button = tk.Button(master, text="Analyize",
