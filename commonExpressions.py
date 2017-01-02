@@ -37,7 +37,7 @@ def save(indexed, keysindex, outputtype = "txt"):
         output = ""
         for i in range(len(keysindex)):
             output = output + "\n {}  :: {}".format(keysindex[i], str(indexed[keysindex[i]]))
-        fileoutput = open("output.txt", "w")
+        fileoutput = open("output{}.txt".format(time.ctime().replace(":", "-")), "w")
         fileoutput.write(output)
         fileoutput.close()
     elif outputtype == "sqlite3":
@@ -62,8 +62,14 @@ def save(indexed, keysindex, outputtype = "txt"):
         while turn < endturn:
             ws.append([keysindex[turn], indexed[keysindex[turn]]])
             turn += 1
-        wb.save("output.xlsx")
-
+        wb.save("output{}.xlsx".format(time.ctime().replace(":", "-")))
+    elif outputtype == "csv":
+        output = "word,count"
+        for i in range(len(keysindex)):
+            output = output + "\n{},{}".format(keysindex[i], str(indexed[keysindex[i]]))
+        fileoutput = open("output{}.csv".format(time.ctime().replace(":", "-")), "w")
+        fileoutput.write(output)
+        fileoutput.close()
 
 def strip_suffices(input_, lang="tr"):
     if lang == "Turkish":
@@ -73,15 +79,3 @@ def strip_suffices(input_, lang="tr"):
         for i in range(len(commonExpressions.suffices_en)):
             input_ = input_.replace(CommonExpressions.suffices_en[i], "")
     return input_
-
-def save_unsufficed(inputed, method="txt"):
-    if method == "txt":
-        file_ = open("outputSuffix.txt", "w")
-        file_.write(inputed)
-        file_.close()
-    elif method == "docx":
-        output_file = Document()
-        inputedlines = inputed.split("\n")
-        for i in range(len(inputedlines)):
-            output_file.add_paragraph(inputedlines[i])
-        output_file.save("output.docx")

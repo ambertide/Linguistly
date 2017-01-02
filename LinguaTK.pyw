@@ -14,18 +14,20 @@ class Latte:
         self.file_directory_button = tk.Button(master,
             text = "Browse", command = lambda: self.browse())
         self.selectorVar = tk.StringVar(master)
-        self.selectorVar.set("txt")
+        self.selectorVar.set("csv")
         self.checkBoxVar = tk.IntVar(master)
         self.output_method_select = tk.OptionMenu(master, self.selectorVar,
-            "txt", "sqlite3", "xlsx")
+            "txt", "sqlite3", "xlsx", "csv")
+        self.addButton = Button(master, text= "+", command= lambda: self.add())
         self.is_turkish = tk.Checkbutton(master, text= "Turkish",
             variable = self.checkBoxVar)
-        self.output_finalize_button = tk.Button(master, text="Analyize",
+        self.output_finalize_button = tk.Button(master, text="Analyise",
             state = tk.DISABLED, command= lambda: self.commence())
         self.file_directory_label.grid(row=0, column=0, columnspan=2,
             sticky=tk.W + tk.E + tk.S + tk.N)
         self.file_directory_button.grid(row=0, column=2,
             sticky=tk.W + tk.E + tk.S + tk.N)
+        self.addButton(row=0, column=3, sticky=tk.W + tk.E + tk.S + tk.N)
         self.output_method_select.grid(row=1, column=0,
             sticky=tk.W + tk.E + tk.S + tk.N)
         self.is_turkish.grid(row=1, column=1)
@@ -40,6 +42,8 @@ class Latte:
         self.file_directory = filedialog.askopenfilename(**options)
         self.file_directory_label['text'] = self.file_directory
         self.output_finalize_button['state'] = 'normal'
+
+    def add(self):
 
     def commence(self):
         extension = self.file_directory.split(".")
