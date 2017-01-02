@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from commonExpressions import CommonExpressions, prepare, save, strip_suffices
+from commonExpressions import CommonExpressions, prepare, save, strip_suffices, draw
 from docx import Document
 
 
@@ -24,6 +24,8 @@ class Latte:
             variable = self.checkBoxVar)
         self.output_finalize_button = tk.Button(master, text="Analyise",
             state = tk.DISABLED, command= lambda: self.commence())
+        self.output_draw_button = tk.Button(master, text="+Draw",
+            state= tk.DISABLED, command= lambda: self.commence(1))
         self.file_directory_label.grid(row=0, column=0, columnspan=2,
             sticky=tk.W + tk.E + tk.S + tk.N)
         self.file_directory_button.grid(row=0, column=2,
@@ -36,7 +38,9 @@ class Latte:
         self.suffix_checkBox = tk.Checkbutton(master, text= "Remove suffixes",
             variable = self.suffix_clean)
         self.suffix_checkBox.grid(row=1, column=2, columnspan=2)
-        self.output_finalize_button.grid(row=2, column=0, columnspan=4,
+        self.output_finalize_button.grid(row=2, column=0, columnspan=3,
+            sticky=tk.W + tk.E + tk.S + tk.N)
+        self.output_draw_button.grid(row=2, column=3,
             sticky=tk.W + tk.E + tk.S + tk.N)
     def browse(self):
         self.file_number_var = 1
@@ -48,6 +52,7 @@ class Latte:
         self.file_directory = filedialog.askopenfilename(**options)
         self.file_directory_label['text'] = self.file_directory
         self.output_finalize_button['state'] = 'normal'
+        self.output_draw_button['state'] = 'normal'
 
     def add(self):
         addScreen = tk.Toplevel()
@@ -64,7 +69,8 @@ class Latte:
         self.file_directory = self.filenames.get()
         self.file_directory_label['text'] = self.file_directory
         self.output_finalize_button['state'] = 'normal'
-    def commence(self):
+        self.output_draw_button['state'] = 'normal'
+    def commence(self, is_draw = 0):
         if self.file_number_var == 1:
             extension = self.file_directory.split(".")
             initdata = ""
@@ -95,6 +101,8 @@ class Latte:
             keysindex = list(indexed)
             save(indexed, keysindex,
                 outputtype = self.selectorVar.get())
+            if is_draw == 1:
+                draw(indexed)
         elif self.file_number_var == 0:
             fileNames = self.file_directory.split(",")
             for i in range(len(fileNames)):
@@ -128,6 +136,8 @@ class Latte:
                 keysindex = list(indexed)
                 save(indexed, keysindex,
                     outputtype = self.selectorVar.get())
+                if is_draw == 1:
+                    draw(indexed)
 root = tk.Tk()
 cappucino = Latte(root)
 root.mainloop()

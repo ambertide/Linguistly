@@ -2,6 +2,8 @@ import sqlite3
 import time
 from openpyxl import Workbook
 from docx import Document
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class CommonExpressions:
@@ -79,3 +81,17 @@ def strip_suffices(input_, lang="Turkish"):
         for i in range(len(commonExpressions.suffices_en)):
             input_ = input_.replace(CommonExpressions.suffices_en[i], "")
     return input_
+
+
+def draw(data):
+    words = data.keys()
+    count = data.values()
+    xaxis = []
+    for i in range(len(words)):
+        xaxis.append(i)
+    plt.bar(xaxis, count)
+    plt.xticks(xaxis, words)
+    plt.ylabel('Number of usage')
+    plt.xlabel('Words')
+    plt.title('Word Usage Graph')
+    plt.show()
