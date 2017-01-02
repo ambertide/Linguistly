@@ -71,7 +71,6 @@ def save(indexed, keysindex, outputtype = "txt"):
         fileoutput.write(output)
         fileoutput.close()
 
-
 def strip_suffices(input_, lang="Turkish"):
     if lang == "Turkish":
         for i in range(len(CommonExpressions.suffices_tr)):
@@ -80,15 +79,3 @@ def strip_suffices(input_, lang="Turkish"):
         for i in range(len(commonExpressions.suffices_en)):
             input_ = input_.replace(CommonExpressions.suffices_en[i], "")
     return input_
-
-def save_unsufficed(inputed, method="txt"):
-    if method == "txt":
-        file_ = open("outputSuffix.txt", "w")
-        file_.write(inputed)
-        file_.close()
-    elif method == "docx":
-        output_file = Document()
-        inputedlines = inputed.split("\n")
-        for i in range(len(inputedlines)):
-            output_file.add_paragraph(inputedlines[i])
-        output_file.save("output.docx")
