@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from commonExpressions import CommonExpressions, prepare, save
+from commonExpressions import CommonExpressions, prepare, save, strip_suffices
 from docx import Document
 
 
@@ -29,7 +29,11 @@ class Latte:
         self.output_method_select.grid(row=1, column=0,
             sticky=tk.W + tk.E + tk.S + tk.N)
         self.is_turkish.grid(row=1, column=1)
-        self.output_finalize_button.grid(row=1, column=2,
+        self.suffix_clean = tk.IntVar(master)
+        self.suffix_checkBox = tk.Checkbutton(master, text= "Remove suffixes",
+            variable = self.suffix_clean)
+        self.suffix_checkBox.grid(row=1, column=2)
+        self.output_finalize_button.grid(row=2, column=0, columnspan=3,
             sticky=tk.W + tk.E + tk.S + tk.N)
     def browse(self):
         options = {}
@@ -55,8 +59,13 @@ class Latte:
             parags = file.paragraphs
             for i in range(len(parags)):
                 initdata += parags[i].text
+        if self.suffix_clean.get() == 1:
+            if self.checkBoxVar == 1:
+                initdata = strip_suffices(initdata, "Turkish")
+            elif self.checkBoxVar == 0:
+                initdata = strip_suffices(initdata, "English")
         if self.checkBoxVar.get() == 1:
-            findata = prepare(initdata)
+            findata = prepare(initdata, "yes")
         elif self.checkBoxVar.get() == 0:
             findata = prepare(initdata)
         indexed = {}

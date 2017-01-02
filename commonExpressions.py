@@ -72,7 +72,7 @@ def save(indexed, keysindex, outputtype = "txt"):
         fileoutput.close()
 
 
-def strip_suffices(input_, lang="tr"):
+def strip_suffices(input_, lang="Turkish"):
     if lang == "Turkish":
         for i in range(len(CommonExpressions.suffices_tr)):
             input_ = input_.replace(CommonExpressions.suffices_tr[i], "")
