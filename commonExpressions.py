@@ -8,7 +8,7 @@ import numpy as np
 
 class CommonExpressions:
     punctuations = [".", "?", ";", ":", "!", "(", ")", ",", "\\", "\"", "-",
-                    "--", "”", "“", "\n", "\t", "  "]
+                    "--", "”", "“", "\n", "\t", "—", "  "]
     suffices_tr = ["'nin", "'nın", "'a", "'e", "'i", "'", "'de", "'da",
                     "'in", "'ın", "'ım", "'im", "'den", "'dan", "'ten",
                     "'tan", "”", "'te", "'ta",
