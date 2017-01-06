@@ -8,7 +8,7 @@ import numpy as np
 
 class CommonExpressions:
     punctuations = [".", "?", ";", ":", "!", "(", ")", ",", "\\", "\"", "-",
-                    "--", "  ", "”", "“"]
+                    "--", "”", "“", "\n", "\t", "  "]
     suffices_tr = ["'nin", "'nın", "'a", "'e", "'i", "'", "'de", "'da",
                     "'in", "'ın", "'ım", "'im", "'den", "'dan", "'ten",
                     "'tan", "”", "'te", "'ta",
@@ -31,6 +31,9 @@ def prepare(stringObject, tr = "no"):
         hold = hold.replace(CommonExpressions.punctuations[i], " ")
     hold = hold.lower()
     output = hold.split(" ")
+    outputResWordSpace = output.count('')
+    for i in range(outputResWordSpace):
+        output.remove('')
     return output
 
 
