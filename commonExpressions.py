@@ -85,7 +85,7 @@ def strip_suffices(input_, lang="Turkish"):
             input_ = input_.replace(CommonExpressions.suffices_en[i], "")
     return input_
 
-def strip_conjunctions(input, lang="Turkish"):
+def strip_conjunctions(input_, lang="Turkish"):
     if lang == "Turkish":
         for i in range(len(CommonExpressions.conjunctions_tr)):
             input_ = input_.replace(CommonExpressions.conjunctions_tr[i], "")
