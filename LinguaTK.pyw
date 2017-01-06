@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from commonExpressions import CommonExpressions, prepare, save, strip_suffices, draw
+from commonExpressions import CommonExpressions, prepare, save, strip_suffices, strip_conjunctions, draw
 from docx import Document
 
 
@@ -8,6 +8,8 @@ class Latte:
     def __init__(self, master):
         self.master = master
         master.title("LinguaTK")
+        master.bind("a", self.advanced)
+        master.bind("A", self.advanced)
         self.file_number_var = 1
         self.file_directory = ""
         self.file_directory_label = tk.Label(master,
@@ -16,6 +18,7 @@ class Latte:
             text = "Browse", command = lambda: self.browse())
         self.selectorVar = tk.StringVar(master)
         self.selectorVar.set("csv")
+        self.advencedVar = tk.IntVar(master)
         self.checkBoxVar = tk.IntVar(master)
         self.output_method_select = tk.OptionMenu(master, self.selectorVar,
             "txt", "sqlite3", "xlsx", "csv")
@@ -70,6 +73,12 @@ class Latte:
         self.file_directory_label['text'] = self.file_directory
         self.output_finalize_button['state'] = 'normal'
         self.output_draw_button['state'] = 'normal'
+
+    def advanced(self, event=None):
+        advencedOp = tk.Toplevel()
+        conjunction = tk.Checkbutton(advencedOp, text="Remove conjunctions",
+            variable= self.advencedVar)
+        conjunction.grid(row=0, column=0)
     def commence(self, is_draw = 0):
         if self.file_number_var == 1:
             extension = self.file_directory.split(".")
@@ -86,10 +95,15 @@ class Latte:
                 for i in range(len(parags)):
                     initdata += parags[i].text
             if self.suffix_clean.get() == 1:
-                if self.checkBoxVar == 1:
+                if self.checkBoxVar.get() == 1:
                     initdata = strip_suffices(initdata, "Turkish")
-                elif self.checkBoxVar == 0:
+                elif self.checkBoxVar.get() == 0:
                     initdata = strip_suffices(initdata, "English")
+            if self.advencedVar.get() == 1:
+                if self.checkBoxVar.get() == 1:
+                    initdata = strip_conjunctions(initdata, "Turkish")
+                elif self.checkBoxVar.get() == 0:
+                    initdata = strip_conjunctions(initdata, "English")
             if self.checkBoxVar.get() == 1:
                 findata = prepare(initdata, "yes")
             elif self.checkBoxVar.get() == 0:
@@ -125,6 +139,11 @@ class Latte:
                         initdata = strip_suffices(initdata, "Turkish")
                     elif self.checkBoxVar == 0:
                         initdata = strip_suffices(initdata, "English")
+                if self.advencedVar.get() == 1:
+                    if self.checkBoxVar.get() == 1:
+                        initdata = strip_conjunctions(initdata, "Turkish")
+                    elif self.checkBoxVar.get() == 0:
+                        initdata = strip_conjunctions(initdata, "English")
                 if self.checkBoxVar.get() == 1:
                     findata = prepare(initdata, "yes")
                 elif self.checkBoxVar.get() == 0:

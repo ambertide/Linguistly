@@ -15,8 +15,8 @@ class CommonExpressions:
                     "’nin", "’nın", "’a", "’e", "’i", "’de", "’da",
                     "’in", "’ın", "’ım", "’im", "’den", "’dan", "’ten",
                     "’tan", "’te", "’ta"]
-
-
+    conjunctions_tr = ["ve", "ama", "ki", "de", "da", "mi"]
+    conjunctions_en = ["and", "but", "or", "so", "therefore", "thus"]
     suffices_en = ["'s", "'re", "n't"]
     trtolatin = ["I"]
     trtolatindict = {"I": "i"}
@@ -85,6 +85,14 @@ def strip_suffices(input_, lang="Turkish"):
             input_ = input_.replace(CommonExpressions.suffices_en[i], "")
     return input_
 
+def strip_conjunctions(input_, lang="Turkish"):
+    if lang == "Turkish":
+        for i in range(len(CommonExpressions.conjunctions_tr)):
+            input_ = input_.replace(CommonExpressions.conjunctions_tr[i], "")
+    elif lang == "English":
+        for i in range(len(commonExpressions.conjunctions_en)):
+            input_ = input_.replace(CommonExpressions.conjunctions_en[i], "")
+    return input_
 
 def draw(data):
     words = data.keys()
