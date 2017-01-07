@@ -40,11 +40,15 @@ class Latte:
         self.suffix_clean = tk.IntVar(master)
         self.suffix_checkBox = tk.Checkbutton(master, text= "Remove suffixes",
             variable = self.suffix_clean)
+        file_ = open("settings.lingua", "r")
+        self.custom_remove = file_.read()
+        file_.close()
         self.suffix_checkBox.grid(row=1, column=2, columnspan=2)
         self.output_finalize_button.grid(row=2, column=0, columnspan=3,
             sticky=tk.W + tk.E + tk.S + tk.N)
         self.output_draw_button.grid(row=2, column=3,
             sticky=tk.W + tk.E + tk.S + tk.N)
+        self.custom_words = []
     def browse(self):
         self.file_number_var = 1
         options = {}
@@ -79,6 +83,20 @@ class Latte:
         conjunction = tk.Checkbutton(advencedOp, text="Remove conjunctions",
             variable= self.advencedVar)
         conjunction.grid(row=0, column=0)
+        special = tk.Entry(advencedOp)
+        file_ = open("settings.lingua", "r")
+        settings = file_.read()
+        file_.close()
+        special.insert(tk.END, settings)
+        special.grid(row=1, column=0)
+        save = tk.Button(advencedOp, text="Add words", command= lambda: self.savewords(special.get()))
+        save.grid(row=2, column=0)
+
+    def savewords(self, input_):
+        file_ = open("settings.lingua", "w")
+        file_.write(input_)
+        file_.close()
+        self.custom_words = input_.split(",")
     def commence(self, is_draw = 0):
         if self.file_number_var == 1:
             extension = self.file_directory.split(".")
@@ -104,6 +122,8 @@ class Latte:
                     initdata = strip(initdata, "Turkish", "conjunctions")
                 elif self.checkBoxVar.get() == 0:
                     initdata = strip(initdata, "English", "conjunctions")
+            if self.custom_words != []:
+                initdata = strip(initdata, toBeRemoved = self.custom_words)
             if self.checkBoxVar.get() == 1:
                 findata = prepare(initdata, "yes")
             elif self.checkBoxVar.get() == 0:
@@ -144,6 +164,8 @@ class Latte:
                         initdata = strip(initdata, "Turkish", "conjunctions")
                     elif self.checkBoxVar.get() == 0:
                         initdata = strip(initdata, "English", "conjunctions")
+                if self.custom_words != []:
+                    initdata = strip(initdata, toBeRemoved = self.custom_words)
                 if self.checkBoxVar.get() == 1:
                     findata = prepare(initdata, "yes")
                 elif self.checkBoxVar.get() == 0:
