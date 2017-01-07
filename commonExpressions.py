@@ -72,8 +72,9 @@ def save(indexed, keysindex, outputtype = "txt"):
             turn += 1
         wb.save("output{}.xlsx".format(time.ctime().replace(":", "-")))
 
-def strip(input_, lang="Turkish", method="suffix"):
-    toBeRemoved = CommonExpressions.lang_sep[method][lang]
+def strip(input_, lang="Turkish", method="suffix", toBeRemoved = []):
+    if toBeRemoved == []:
+        toBeRemoved = CommonExpressions.lang_sep[method][lang]
     for i in range(len(toBeRemoved)):
         input_ = input_.replace(toBeRemoved[i], "")
     return input_
