@@ -41,11 +41,11 @@ def prepare(stringObject, tr = "no"):
 
 
 def save(indexed, keysindex, outputtype = "txt"):
-    if outputtype == "txt":
-        output = ""
+    if outputtype == "txt" or outputtype == "csv":
+        output = "word,count"
         for i in range(len(keysindex)):
-            output = output + "\n {}  :: {}".format(keysindex[i], str(indexed[keysindex[i]]))
-        fileoutput = open("output{}.txt".format(time.ctime().replace(":", "-")), "w")
+            output = output + "\n{},{}".format(keysindex[i], str(indexed[keysindex[i]]))
+        fileoutput = open("output{}.{}".format(outputtype ,time.ctime().replace(":", "-")), "w")
         fileoutput.write(output)
         fileoutput.close()
     elif outputtype == "sqlite3":
@@ -71,13 +71,6 @@ def save(indexed, keysindex, outputtype = "txt"):
             ws.append([keysindex[turn], indexed[keysindex[turn]]])
             turn += 1
         wb.save("output{}.xlsx".format(time.ctime().replace(":", "-")))
-    elif outputtype == "csv":
-        output = "word,count"
-        for i in range(len(keysindex)):
-            output = output + "\n{},{}".format(keysindex[i], str(indexed[keysindex[i]]))
-        fileoutput = open("output{}.csv".format(time.ctime().replace(":", "-")), "w")
-        fileoutput.write(output)
-        fileoutput.close()
 
 def strip(input_, lang="Turkish", method="suffix"):
     toBeRemoved = CommonExpressions.lang_sep[method][lang]
