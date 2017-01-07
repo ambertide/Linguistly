@@ -79,28 +79,10 @@ def save(indexed, keysindex, outputtype = "txt"):
         fileoutput.write(output)
         fileoutput.close()
 
-def strip_suffices(input_, lang="Turkish"):
-    if lang == "Turkish":
-        for i in range(len(CommonExpressions.suffices_tr)):
-            input_ = input_.replace(CommonExpressions.suffices_tr[i], "")
-    elif lang == "English":
-        for i in range(len(commonExpressions.suffices_en)):
-            input_ = input_.replace(CommonExpressions.suffices_en[i], "")
-    return input_
-
 def strip(input_, lang="Turkish", method="suffix"):
     toBeRemoved = CommonExpressions.lang_sep[method][lang]
     for i in range(len(toBeRemoved)):
         input_ = input_.replace(toBeRemoved[i], "")
-    return input_
-
-def strip_conjunctions(input_, lang="Turkish"):
-    if lang == "Turkish":
-        for i in range(len(CommonExpressions.conjunctions_tr)):
-            input_ = input_.replace(CommonExpressions.conjunctions_tr[i], "")
-    elif lang == "English":
-        for i in range(len(commonExpressions.conjunctions_en)):
-            input_ = input_.replace(CommonExpressions.conjunctions_en[i], "")
     return input_
 
 def draw(data):
