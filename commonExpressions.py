@@ -8,18 +8,21 @@ import numpy as np
 
 class CommonExpressions:
     punctuations = [".", "?", ";", ":", "!", "(", ")", ",", "\\", "\"", "-",
-                    "--", "”", "“", "\n", "\t", "—", "  "]
-    suffices_tr = ["'nin", "'nın", "'a", "'e", "'i", "'", "'de", "'da",
+                    "--", "”", "“", "\n", "\t", "—", "'", "  "]
+    suffices_tr = ["'nin", "'nın", "'a", "'e", "'i",
                     "'in", "'ın", "'ım", "'im", "'den", "'dan", "'ten",
-                    "'tan", "”", "'te", "'ta",
-                    "’nin", "’nın", "’a", "’e", "’i", "’de", "’da",
+                    "'tan", "'te", "'ta", "'i" "'de", "'da",
+                    "’nin", "’nın", "’a", "’e",
                     "’in", "’ın", "’ım", "’im", "’den", "’dan", "’ten",
-                    "’tan", "’te", "’ta"]
-    conjunctions_tr = ["ve", "ama", "ki", "de", "da", "mi"]
-    conjunctions_en = ["and", "but", "or", "so", "therefore", "thus"]
+                    "’tan", "’te", "’ta", "’i", "’de", "’da"]
+    conjunctions_tr = [" ve ", " ama ", " ki ", " de ", " da ", " mi "]
+    conjunctions_en = [" and ", " but ", " or ", " so ", " therefore ", " thus "]
     suffices_en = ["'s", "'re", "n't"]
     trtolatin = ["I"]
     trtolatindict = {"I": "i"}
+    conjunctions = {"Turkish":conjunctions_tr, "English":conjunctions_en}
+    suffixes = {"Turkish":suffices_tr, "English":suffices_en}
+    lang_sep = {"suffix":suffixes, "conjunctions":conjunctions}
 
 
 def prepare(stringObject, tr = "no"):
@@ -38,11 +41,11 @@ def prepare(stringObject, tr = "no"):
 
 
 def save(indexed, keysindex, outputtype = "txt"):
-    if outputtype == "txt":
-        output = ""
+    if outputtype == "txt" or outputtype == "csv":
+        output = "word,count"
         for i in range(len(keysindex)):
-            output = output + "\n {}  :: {}".format(keysindex[i], str(indexed[keysindex[i]]))
-        fileoutput = open("output{}.txt".format(time.ctime().replace(":", "-")), "w")
+            output = output + "\n{},{}".format(keysindex[i], str(indexed[keysindex[i]]))
+        fileoutput = open("output{}.{}".format(outputtype ,time.ctime().replace(":", "-")), "w")
         fileoutput.write(output)
         fileoutput.close()
     elif outputtype == "sqlite3":
@@ -68,30 +71,11 @@ def save(indexed, keysindex, outputtype = "txt"):
             ws.append([keysindex[turn], indexed[keysindex[turn]]])
             turn += 1
         wb.save("output{}.xlsx".format(time.ctime().replace(":", "-")))
-    elif outputtype == "csv":
-        output = "word,count"
-        for i in range(len(keysindex)):
-            output = output + "\n{},{}".format(keysindex[i], str(indexed[keysindex[i]]))
-        fileoutput = open("output{}.csv".format(time.ctime().replace(":", "-")), "w")
-        fileoutput.write(output)
-        fileoutput.close()
 
-def strip_suffices(input_, lang="Turkish"):
-    if lang == "Turkish":
-        for i in range(len(CommonExpressions.suffices_tr)):
-            input_ = input_.replace(CommonExpressions.suffices_tr[i], "")
-    elif lang == "English":
-        for i in range(len(commonExpressions.suffices_en)):
-            input_ = input_.replace(CommonExpressions.suffices_en[i], "")
-    return input_
-
-def strip_conjunctions(input_, lang="Turkish"):
-    if lang == "Turkish":
-        for i in range(len(CommonExpressions.conjunctions_tr)):
-            input_ = input_.replace(CommonExpressions.conjunctions_tr[i], "")
-    elif lang == "English":
-        for i in range(len(commonExpressions.conjunctions_en)):
-            input_ = input_.replace(CommonExpressions.conjunctions_en[i], "")
+def strip(input_, lang="Turkish", method="suffix"):
+    toBeRemoved = CommonExpressions.lang_sep[method][lang]
+    for i in range(len(toBeRemoved)):
+        input_ = input_.replace(toBeRemoved[i], "")
     return input_
 
 def draw(data):

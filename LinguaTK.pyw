@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from commonExpressions import CommonExpressions, prepare, save, strip_suffices, strip_conjunctions, draw
+from commonExpressions import CommonExpressions, prepare, save, strip, draw
 from docx import Document
 
 
@@ -96,14 +96,14 @@ class Latte:
                     initdata += parags[i].text
             if self.suffix_clean.get() == 1:
                 if self.checkBoxVar.get() == 1:
-                    initdata = strip_suffices(initdata, "Turkish")
+                    initdata = strip(initdata, "Turkish", "suffix")
                 elif self.checkBoxVar.get() == 0:
-                    initdata = strip_suffices(initdata, "English")
+                    initdata = strip(initdata, "English", "suffix")
             if self.advencedVar.get() == 1:
                 if self.checkBoxVar.get() == 1:
-                    initdata = strip_conjunctions(initdata, "Turkish")
+                    initdata = strip(initdata, "Turkish", "conjunctions")
                 elif self.checkBoxVar.get() == 0:
-                    initdata = strip_conjunctions(initdata, "English")
+                    initdata = strip(initdata, "English", "conjunctions")
             if self.checkBoxVar.get() == 1:
                 findata = prepare(initdata, "yes")
             elif self.checkBoxVar.get() == 0:
@@ -136,14 +136,14 @@ class Latte:
                         initdata += parags[i].text
                 if self.suffix_clean.get() == 1:
                     if self.checkBoxVar == 1:
-                        initdata = strip_suffices(initdata, "Turkish")
+                        initdata = strip(initdata, "Turkish", "suffix")
                     elif self.checkBoxVar == 0:
-                        initdata = strip_suffices(initdata, "English")
+                        initdata = strip(initdata, "English", "suffix")
                 if self.advencedVar.get() == 1:
                     if self.checkBoxVar.get() == 1:
-                        initdata = strip_conjunctions(initdata, "Turkish")
+                        initdata = strip(initdata, "Turkish", "conjunctions")
                     elif self.checkBoxVar.get() == 0:
-                        initdata = strip_conjunctions(initdata, "English")
+                        initdata = strip(initdata, "English", "conjunctions")
                 if self.checkBoxVar.get() == 1:
                     findata = prepare(initdata, "yes")
                 elif self.checkBoxVar.get() == 0:
