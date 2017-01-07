@@ -8,18 +8,21 @@ import numpy as np
 
 class CommonExpressions:
     punctuations = [".", "?", ";", ":", "!", "(", ")", ",", "\\", "\"", "-",
-                    "--", "”", "“", "\n", "\t", "—", "  "]
-    suffices_tr = ["'nin", "'nın", "'a", "'e", "'i", "'", "'de", "'da",
+                    "--", "”", "“", "\n", "\t", "—", "'", "  "]
+    suffices_tr = ["'nin", "'nın", "'a", "'e", "'i",
                     "'in", "'ın", "'ım", "'im", "'den", "'dan", "'ten",
-                    "'tan", "”", "'te", "'ta",
-                    "’nin", "’nın", "’a", "’e", "’i", "’de", "’da",
+                    "'tan", "'te", "'ta", "'i" "'de", "'da",
+                    "’nin", "’nın", "’a", "’e",
                     "’in", "’ın", "’ım", "’im", "’den", "’dan", "’ten",
-                    "’tan", "’te", "’ta"]
-    conjunctions_tr = ["ve", "ama", "ki", "de", "da", "mi"]
-    conjunctions_en = ["and", "but", "or", "so", "therefore", "thus"]
+                    "’tan", "’te", "’ta", "’i", "’de", "’da"]
+    conjunctions_tr = [" ve ", " ama ", " ki ", " de ", " da ", " mi "]
+    conjunctions_en = [" and ", " but ", " or ", " so ", " therefore ", " thus "]
     suffices_en = ["'s", "'re", "n't"]
     trtolatin = ["I"]
     trtolatindict = {"I": "i"}
+    conjunctions = {"Turkish":conjunctions_tr, "English":conjunctions_en}
+    suffixes = {"Turkish":suffices_tr, "English":suffices_en}
+    lang_sep = {"suffix":suffixes, "conjunctions":conjunctions}
 
 
 def prepare(stringObject, tr = "no"):
@@ -83,6 +86,12 @@ def strip_suffices(input_, lang="Turkish"):
     elif lang == "English":
         for i in range(len(commonExpressions.suffices_en)):
             input_ = input_.replace(CommonExpressions.suffices_en[i], "")
+    return input_
+
+def strip(input_, lang="Turkish", method="suffix"):
+    toBeRemoved = CommonExpressions.lang_sep[method][lang]
+    for i in range(len(toBeRemoved)):
+        input_ = input_.replace(toBeRemoved[i], "")
     return input_
 
 def strip_conjunctions(input_, lang="Turkish"):
