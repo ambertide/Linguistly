@@ -2,8 +2,8 @@ import sqlite3
 import time
 from openpyxl import Workbook
 from docx import Document
-import matplotlib.pyplot as plt
-import numpy as np
+#import matplotlib.pyplot as plt
+#import numpy as np
 
 
 class CommonExpressions:
@@ -79,15 +79,15 @@ def strip(input_, lang="Turkish", method="suffix", toBeRemoved = []):
         input_ = input_.replace(toBeRemoved[i], "")
     return input_
 
-def draw(data):
-    words = data.keys()
-    count = data.values()
-    xaxis = []
-    for i in range(len(words)):
-        xaxis.append(i)
-    plt.bar(xaxis, count)
-    plt.xticks(xaxis, words)
-    plt.ylabel('Number of usage')
-    plt.xlabel('Words')
-    plt.title('Word Usage Graph')
-    plt.show()
+#def draw(data):
+#    words = data.keys()
+#    count = data.values()
+#    xaxis = []
+#    for i in range(len(words)):
+#        xaxis.append(i)
+#    plt.bar(xaxis, count)
+#    plt.xticks(xaxis, words)
+#    plt.ylabel('Number of usage')
+#    plt.xlabel('Words')
+#    plt.title('Word Usage Graph')
+#    plt.show()
