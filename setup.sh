@@ -4,3 +4,4 @@ pip3 install numpy
 pip3 install matplotlib
 pip3 install openpyxl
 echo "" >> settings.lingua
+echo "en" >> lang.lingua
